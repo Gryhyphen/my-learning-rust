@@ -9,7 +9,18 @@
 		"ghcr.io/devcontainers/features/python:1": {},
 		"ghcr.io/devcontainers/features/rust:1": {},
 		"ghcr.io/devcontainers-community/npm-features/typescript:1": {}
-	}
+	},
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"raspberry-pi.raspberry-pi-pico",
+				"ms-python.python",
+				"visualstudioexptteam.vscodeintellicode",
+				"ms-python.vscode-pylance"
+			]
+		}
+	},
+	"runArgs": ["--privileged"]
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
