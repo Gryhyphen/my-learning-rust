@@ -39,3 +39,5 @@ Currently unable to update dependencies because of an issue linking with `rust-l
 Is worth updating each crate individually to figure out which crates are the cause of pain.
 
 Furthermore, resolving the rust-lld is probably good. Apparently, it makes the linker faster?
+
+I think maybe the critical section can be resolved by cortex-m's single core critical section feature... may be worth investigating. re: https://www.youtube.com/watch?v=TOAynddiu5M
