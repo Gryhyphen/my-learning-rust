@@ -32,3 +32,10 @@ Mostly looking at rustflags, which apparently are being used to configure crate-
 
 UPDATE 1:
 I was able to remove the bin specification to use the default src/main from the cargo.toml, so now instead of `cargo run --bin blinky` I could run `cargo run`
+
+UPDATE 2:
+
+Currently unable to update dependencies because of an issue linking with `rust-lld` failed: exit status: 1
+Is worth updating each crate individually to figure out which crates are the cause of pain.
+
+Furthermore, resolving the rust-lld is probably good. Apparently, it makes the linker faster?
