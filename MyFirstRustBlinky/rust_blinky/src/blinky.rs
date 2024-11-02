@@ -13,7 +13,7 @@ extern crate embedded_hal;
 extern crate rp2040_hal;
 
 // Ensure we halt the program on panic (if we don't mention this crate it won't
-// be linked)
+#[allow(unused_imports)]
 use panic_halt as _;
 
 // Alias for our HAL crate
@@ -24,7 +24,7 @@ use rp2040_hal as hal;
 use hal::pac;
 
 // Some traits we need
-use embedded_hal::digital::OutputPin;
+use embedded_hal::digital::v2::OutputPin;
 use rp2040_hal::clocks::Clock;
 
 /// The linker will place this boot block at the start of our program image. We
