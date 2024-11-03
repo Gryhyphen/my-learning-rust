@@ -1,0 +1,10 @@
+[package]
+name = "direct_unsafe_blinky"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+cortex-m-rt = "0.7.3"
+panic-halt = "1.0.0"
+rp2040-boot2 = "0.3.0"
+
