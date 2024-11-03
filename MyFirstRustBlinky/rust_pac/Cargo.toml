@@ -1,5 +1,5 @@
 [package]
-name = "direct_unsafe_blinky"
+name = "rust_pac_blinky"
 version = "0.1.0"
 edition = "2021"
 

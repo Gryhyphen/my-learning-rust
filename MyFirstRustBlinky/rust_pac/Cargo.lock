@@ -72,17 +72,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f578e8e2c440e7297e008bb5486a3a8a194775224bbc23729b0dbdfaeebf162e"
 
 [[package]]
-name = "direct_unsafe_blinky"
-version = "0.1.0"
-dependencies = [
- "cortex-m",
- "cortex-m-rt",
- "panic-halt",
- "rp2040-boot2",
- "rp2040-pac",
-]
-
-[[package]]
 name = "embedded-hal"
 version = "0.2.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -149,6 +138,17 @@ dependencies = [
  "cortex-m",
  "critical-section",
  "vcell",
+]
+
+[[package]]
+name = "rust_pac_blinky"
+version = "0.1.0"
+dependencies = [
+ "cortex-m",
+ "cortex-m-rt",
+ "panic-halt",
+ "rp2040-boot2",
+ "rp2040-pac",
 ]
 
 [[package]]
