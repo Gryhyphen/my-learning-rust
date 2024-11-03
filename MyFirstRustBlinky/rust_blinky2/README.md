@@ -41,3 +41,9 @@ Is worth updating each crate individually to figure out which crates are the cau
 Furthermore, resolving the rust-lld is probably good. Apparently, it makes the linker faster?
 
 I think maybe the critical section can be resolved by cortex-m's single core critical section feature... may be worth investigating. re: https://www.youtube.com/watch?v=TOAynddiu5M
+
+UPDATE 3:
+
+Updated things as best as I can. Looks like the latest cortext-m (v0.7.7) is relying on an older version of embedded-hal (v0.2.7), so we are unable to progress to embedded-hal v1.0.0
+
+I think?

@@ -6,9 +6,8 @@ extern crate panic_halt;
 extern crate embedded_hal;
 extern crate rp2040_hal;
 
-// Some traits we need
-use embedded_hal::digital::v2::OutputPin;
 
+use embedded_hal::digital::v2::OutputPin;
 
 use cortex_m::peripheral as _;
 // Ensure we halt the program on panic (if we don't mention this crate it won't
