@@ -9,4 +9,4 @@ panic-halt = "0.2.0"
 embedded-hal = { version = "0.2.5", features = ["unproven"] }
 cortex-m = "0.7.2"
 cortex-m-rt = "0.7"
-rp2040-boot2 = "0.2.1"
+rp2040-boot2 = "0.3.0"
