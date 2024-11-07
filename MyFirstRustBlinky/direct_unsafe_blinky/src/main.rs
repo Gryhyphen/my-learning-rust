@@ -1,7 +1,7 @@
 #![no_std]
 #![no_main]
 
-use core::ptr::write_volatile;
+use core::ptr::{write_volatile, read_volatile};
 use cortex_m_rt::entry;
 use panic_halt as _;
 
@@ -25,24 +25,57 @@ const FUNCSEL_MODE_SIO: u32 = 5;
 
 const SIO_BASE: u32 =  0xd0000000;
 
-const GPIO_OUT_REGISTER_OFFSET: u32 = 0x010;
-const GPIO_OE_REGISTER_OFFSET: u32 = 0x020;
+//const GPIO_OUT_REGISTER_OFFSET: u32 = 0x010;
+//const GPIO_OE_REGISTER_OFFSET: u32 = 0x020;
 const GPIO_OE_SET_OFFSET: u32 = 0x24; // Offset for gpio_oe_set
 const GPIO_OUT_SET_OFFSET: u32 = 0x014;
 
 // 25 bitshifted
 const TWENTYFIVE : u32 = 1 << 25;
 
+
+// RESETS
+// When the RP2040 starts, the IO Bank0 peripheral is disabled.
+// To enable it, developers have to start the IO Bank0 reset process by writing
+//  1 << 5 is the bit value for restting the IO bank
+// Then wait till the reset_done for this operation returns true.
+
+const RESETS_BASE: u32 =  0x4000c000; // Yes RESETS and not RESET
+
+const RESET_OFFSET: u32 = 0;
+const RESET_DONE_OFFSET: u32 = 0x8;
+
+const IO_BANK0_BIT: u32 = 1 << 5;
+
+
 #[entry]
 fn main() -> ! {
+    const RESET_ADDR: *mut u32 = (RESETS_BASE + RESET_OFFSET) as *mut u32;
+    const RESET_DONE_ADDR: *mut u32 = (RESETS_BASE + RESET_DONE_OFFSET) as *mut u32;
+
     const GPIO25_CTRL_REGISTER_ADDR: *mut u32 = (USER_BANK_IO_REGISTER_START_ADDRESS + GPIO25_CTRL_OFFSET)  as *mut u32;
-    const GPIO_OE_ADDR: *mut u32 = (SIO_BASE + GPIO_OE_SET_OFFSET) as *mut u32;
-    const GPIO_OUT_ADDR: *mut u32 = (SIO_BASE + GPIO_OUT_SET_OFFSET) as *mut u32;
+    
+    //const GPIO_OE_ADDR: *mut u32 = (SIO_BASE + GPIO_OE_REGISTER_OFFSET) as *mut u32;
+    //const GPIO_OUT_ADDR: *mut u32 = (SIO_BASE + GPIO_OUT_REGISTER_OFFSET) as *mut u32;
+
+    const GPIO_OE_SET_ADDR: *mut u32 = (SIO_BASE + GPIO_OE_SET_OFFSET) as *mut u32;
+    const GPIO_OUT_SET_ADDR: *mut u32 = (SIO_BASE + GPIO_OUT_SET_OFFSET) as *mut u32;
+
 
     unsafe {
+        // Enable IO_BANK0
+        write_volatile(RESET_ADDR, read_volatile(RESET_ADDR) & !IO_BANK0_BIT);
+        // Wait until the IO_BANK0 is initalized
+        while read_volatile(RESET_DONE_ADDR) & IO_BANK0_BIT == 0 {}
+        
+
+
+        // Enable funcsel for gpio25 in IO Bank0
         write_volatile(GPIO25_CTRL_REGISTER_ADDR, FUNCSEL_MODE_SIO);
-        write_volatile(GPIO_OE_ADDR, TWENTYFIVE);
-        write_volatile(GPIO_OUT_ADDR, TWENTYFIVE);
+        // Out Enable (OE)
+        write_volatile(GPIO_OE_SET_ADDR, TWENTYFIVE);
+        // Set bit
+        write_volatile(GPIO_OUT_SET_ADDR, TWENTYFIVE);
     }
 
     loop {
