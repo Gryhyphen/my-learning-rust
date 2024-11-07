@@ -25,8 +25,8 @@ const FUNCSEL_MODE_SIO: u32 = 5;
 
 const SIO_BASE: u32 =  0xd0000000;
 
-//const GPIO_OUT_REGISTER_OFFSET: u32 = 0x010;
-//const GPIO_OE_REGISTER_OFFSET: u32 = 0x020;
+const GPIO_OUT_REGISTER_OFFSET: u32 = 0x010;
+const GPIO_OE_REGISTER_OFFSET: u32 = 0x020;
 const GPIO_OE_SET_OFFSET: u32 = 0x24; // Offset for gpio_oe_set
 const GPIO_OUT_SET_OFFSET: u32 = 0x014;
 
@@ -55,8 +55,8 @@ fn main() -> ! {
 
     const GPIO25_CTRL_REGISTER_ADDR: *mut u32 = (USER_BANK_IO_REGISTER_START_ADDRESS + GPIO25_CTRL_OFFSET)  as *mut u32;
     
-    //const GPIO_OE_ADDR: *mut u32 = (SIO_BASE + GPIO_OE_REGISTER_OFFSET) as *mut u32;
-    //const GPIO_OUT_ADDR: *mut u32 = (SIO_BASE + GPIO_OUT_REGISTER_OFFSET) as *mut u32;
+    const GPIO_OE_ADDR: *mut u32 = (SIO_BASE + GPIO_OE_REGISTER_OFFSET) as *mut u32;
+    const GPIO_OUT_ADDR: *mut u32 = (SIO_BASE + GPIO_OUT_REGISTER_OFFSET) as *mut u32;
 
     const GPIO_OE_SET_ADDR: *mut u32 = (SIO_BASE + GPIO_OE_SET_OFFSET) as *mut u32;
     const GPIO_OUT_SET_ADDR: *mut u32 = (SIO_BASE + GPIO_OUT_SET_OFFSET) as *mut u32;
@@ -64,6 +64,9 @@ fn main() -> ! {
 
     unsafe {
         // Enable IO_BANK0
+        // The read_volatile is VERY IMPORTANT
+        // Because just setting it to reset the IO_BANK0_BIT did not work
+        // (Asuumedly because it broke other perherials so I need to merge the bit masks/state)
         write_volatile(RESET_ADDR, read_volatile(RESET_ADDR) & !IO_BANK0_BIT);
         // Wait until the IO_BANK0 is initalized
         while read_volatile(RESET_DONE_ADDR) & IO_BANK0_BIT == 0 {}
@@ -72,10 +75,14 @@ fn main() -> ! {
 
         // Enable funcsel for gpio25 in IO Bank0
         write_volatile(GPIO25_CTRL_REGISTER_ADDR, FUNCSEL_MODE_SIO);
-        // Out Enable (OE)
-        write_volatile(GPIO_OE_SET_ADDR, TWENTYFIVE);
-        // Set bit
-        write_volatile(GPIO_OUT_SET_ADDR, TWENTYFIVE);
+        // Out Enable (OE) SET
+        //write_volatile(GPIO_OE_SET_ADDR, TWENTYFIVE);
+        // Set bit SET
+        //write_volatile(GPIO_OUT_SET_ADDR, TWENTYFIVE);
+
+        // Out Enable
+        write_volatile(GPIO_OE_ADDR, TWENTYFIVE);
+        write_volatile(GPIO_OUT_ADDR, TWENTYFIVE);
     }
 
     loop {
