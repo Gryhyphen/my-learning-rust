@@ -18,5 +18,5 @@ pub static BOOT2: [u8; 256] = rp2040_boot2::BOOT_LOADER_GENERIC_03H;
 
 #[entry]
 fn main() -> ! {
-    learning::pac_external_led::blinky();
+    learning::hal_external_led::blinky();
 }
