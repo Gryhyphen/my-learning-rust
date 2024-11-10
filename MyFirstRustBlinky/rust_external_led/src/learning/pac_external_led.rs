@@ -1,3 +1,5 @@
+
+// This isn't really a blinky since it just turns the led on
 pub fn blinky() -> ! {
     let peripherals = rp2040_pac::Peripherals::take().unwrap();
     
