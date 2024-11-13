@@ -338,7 +338,6 @@ dependencies = [
  "embassy-rp",
  "embassy-time",
  "panic-halt",
- "rp2040-boot2",
 ]
 
 [[package]]

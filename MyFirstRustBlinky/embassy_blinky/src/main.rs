@@ -2,10 +2,6 @@
 #![no_main]
 use panic_halt as _;
 
-#[link_section = ".boot2"]
-#[used]
-pub static BOOT2: [u8; 256] = rp2040_boot2::BOOT_LOADER_GENERIC_03H;
-
 //use embassy_executor::Spawner;
 use embassy_rp::gpio::{Level, Output};
 use embassy_rp::init;

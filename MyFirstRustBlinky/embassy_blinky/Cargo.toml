@@ -8,10 +8,9 @@ cortex-m = { version = "0.7", features = ["critical-section-single-core"] }
 cortex-m-rt = "0.7.5"
 #embassy-executor = { version = "0.6.3", features = ["arch-cortex-m", "executor-thread", "integrated-timers"] }
 #embassy-rp = { version = "0.2.0", features = ["critical-section-impl", "time-driver", "unstable-pac", "rp2040", "boot2-none"] }
-embassy-rp = { version = "0.2.0", features = ["time-driver", "unstable-pac", "rp2040", "boot2-none"] }
+embassy-rp = { version = "0.2.0", features = ["time-driver", "unstable-pac", "rp2040"] }
 embassy-time = "0.3.2"
 panic-halt = "1.0.0"
-rp2040-boot2 = "0.3.0"
 
 [profile.release]
 lto = true
