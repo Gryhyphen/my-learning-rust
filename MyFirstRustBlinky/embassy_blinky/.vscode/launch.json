@@ -1,0 +1,23 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cortex-Debug with external OpenOCD",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceFolder}/${}/workspaces/myFirstBlinky/MyFirstRustBlinky/direct_unsafe_blinky/target/thumbv6m-none-eabi/debug/direct_unsafe_blinky",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "external",
+            "gdbTarget": "localhost:3333",
+            "gdbPath": "gdb",
+            // Give restart the same functionality as runToEntryPoint - main
+            "postRestartCommands": [
+                "break main",
+                "continue"
+            ]
+        },
+    ]
+}
