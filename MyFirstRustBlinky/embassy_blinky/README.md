@@ -14,16 +14,60 @@ Also, I'm still getting multidrop rp2040 issues,
 however this doesn't appear to be preventing me from flashing
 the chip when I'm using cortex-m
 
+# Notes - 2
+
+I have since slowly been getting closer to the source of the issue.
+We are now using the embassy critical section implementation.
+
+This then leaves us looking at the embassy-executor as the culprit.
+
+For some reason the main function isn't being invoked correctly when
+we use the embassy main macro.
+
+May try see if we can manually start the executor from the
+cortex minimal runtime (cortex-m-rt).
+
+But worth just seeing if there is an easy poke to get the following
+minimal example to work:
+
+```rust
+
+#[embassy_executor::main]
+async fn main(spawner: Spawner) {
+    let peripherals = init(Default::default());
+
+    let mut onboard_led = Output::new(peripherals.PIN_25, Level::Low);
+    onboard_led.set_high();
+}
+
+```
+
+An example of how to start an executor from the cortex-m-rt entry point:
+
+https://github.com/embassy-rs/embassy/blob/main/examples/rp/src/bin/multicore.rs
+
+I'm only really planning on using one core anyway, but damn it is weird that
+you have to use the cortex-m-rt entry for multicores, and this isn't abstracted
+away. Cause doesn't that mean if you want to run tasks on different cores, for example,
+for parallel programming, there is no nice api?
+
 
 # Good scripts
 
+## The Best Script
+
+This script builds the application, and if successful, deploys it to the rp2040.
 
 Note - I had to make it executable using `chmod +x /workspaces/myFirstBlinky/MyFirstRustBlinky/embassy_blinky/quickdirtybuild.sh`
+
+Note - The -E is required to keep the current environment context when the script is running
+	   otherwise the script can't find things like the toolchain and rust.
 
 ```shell
 sudo -E ./quickdirtybuild.sh
 ```
 
+## Other scripts
 
 ```shell
 
