@@ -18,6 +18,13 @@ the chip when I'm using cortex-m
 # Good scripts
 
 
+Note - I had to make it executable using `chmod +x /workspaces/myFirstBlinky/MyFirstRustBlinky/embassy_blinky/quickdirtybuild.sh`
+
+```shell
+sudo -E ./quickdirtybuild.sh
+```
+
+
 ```shell
 
 sudo openocd -s tcl \
