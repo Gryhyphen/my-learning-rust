@@ -10,7 +10,7 @@ if [ $? -eq 0 ]; then
         -f interface/cmsis-dap.cfg \
         -f target/rp2040.cfg \
         -c "adapter speed 5000" \
-        -c "program /workspaces/myFirstBlinky/MyFirstRustBlinky/embassy_blinky/target/thumbv6m-none-eabi/debug/embassy_blinky verify reset exit"
+        -c "program /workspaces/myFirstBlinky/MyFirstRustBlinky/embassy_boardlighton/target/thumbv6m-none-eabi/debug/embassy_boardlighton verify reset exit"
 else
     echo "Build failed, please check the errors and try again."
 fi

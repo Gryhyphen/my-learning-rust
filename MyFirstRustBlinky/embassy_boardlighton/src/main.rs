@@ -33,7 +33,6 @@ async fn embassyMain(spawner: Spawner) {
     loop {} 
 }
 
-
 /*
 #[embassy_executor::main]
 async fn main(spawner: Spawner) {
