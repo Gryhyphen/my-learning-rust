@@ -388,7 +388,7 @@ version = "0.1.0"
 source = "git+https://github.com/embassy-rs/embassy?rev=015e3aecb410c2d5afefb908b4d4171d5b478be3#015e3aecb410c2d5afefb908b4d4171d5b478be3"
 
 [[package]]
-name = "embassy_blinky"
+name = "embassy_boardlighton"
 version = "0.1.0"
 dependencies = [
  "cortex-m-rt",

@@ -16,7 +16,17 @@ async fn main(spawner: Spawner) {
     let mut onboard_led = Output::new(peripherals.PIN_25, Level::Low);
     onboard_led.set_high();
     
-    // If I don't have this loop here, the light will only flicker on for a moment
-    // Then disapear
-    loop {} 
+    spawner
+        .spawn(blink_task(onboard_led))
+        .unwrap();
+}
+
+#[embassy_executor::task]
+async fn blink_task(mut led: Output<'static>) {
+    loop {
+        led.set_high();
+        Timer::after_secs(1).await;
+        led.set_low();
+        Timer::after_secs(1).await;
+    }
 }
