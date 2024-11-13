@@ -1,5 +1,22 @@
 
 
+# Notes - 1
+
+Okay I've gotten the embassy hal crate for the rp2040 to work,
+which also has in-built support for the bootloader.
+
+However, I haven't gotten the embassy executor / embassy
+main entry point to work. I've so far had to revert
+to the cortext-m-rt entry point and the
+cortext-m critical section implementation.
+
+Also, I'm still getting multidrop rp2040 issues,
+however this doesn't appear to be preventing me from flashing
+the chip when I'm using cortex-m
+
+
+# Good scripts
+
 
 ```shell
 
