@@ -12,7 +12,7 @@ fn coolMain() -> ! {
     let peripherals = init(Default::default());
 
     let mut onboard_led = Output::new(peripherals.PIN_25, Level::Low);
-    onboard_led.set_high();
+    onboard_led.set_low();
 
     loop {}
 }
