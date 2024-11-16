@@ -10,12 +10,13 @@ use embassy_rp::init;
 mod blink_task;
 use blink_task::blink_task;
 
-
 #[embassy_executor::main]
 async fn main(spawner: Spawner) {
     let peripherals = init(Default::default());
+
+    let onboard_led = peripherals.PIN_25.degrade();
     
     spawner
-        .spawn(blink_task(peripherals.PIN_15.degrade()))
+        .spawn(blink_task(onboard_led))
         .unwrap();
 }
